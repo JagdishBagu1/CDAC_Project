@@ -38,26 +38,22 @@ public class UserService {
     }
 
     // Find a user by email -
-    public User getUserByEmail(String email) {
-        User user = null;
-
-        Optional<User> userRes = userRepo.findByEmail(email);
+    public User getUserById(long id) {
+        Optional<User> userRes = userRepo.findById(id);
         if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the email " + email);
+            throw new ResourceNotFoundException("User not found with the id: " + id);
 
-        user = userRes.get();
-
-        return user;
+        return userRes.get();
     }
 
     // Update the existing user in the DB -
-    public User updateUser(String email, UserDTO updatedUserDTO) {
-        if(!email.equals(updatedUserDTO.getEmail()))
-            throw new RuntimeException("There is ambiguity in request info.");
+    public User updateUser(long id, UserDTO updatedUserDTO) {
+        if(id != updatedUserDTO.getId())
+            throw new RuntimeException("Bad request!");
 
-        Optional<User> userRes = userRepo.findByEmail(email);
+        Optional<User> userRes = userRepo.findById(id);
         if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the email " + email);
+            throw new ResourceNotFoundException("User not found with the id: " + id);
 
         User user = dtoToUser(updatedUserDTO);
         user.setId(userRes.get().getId());
@@ -68,12 +64,12 @@ public class UserService {
     }
 
     // Delete the existing user from the DB -
-    public User deleteUser(String email) {
-        Optional<User> userRes = userRepo.findByEmail(email);
+    public User deleteUser(long id) {
+        Optional<User> userRes = userRepo.findById(id);
         if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the email " + email);
+            throw new ResourceNotFoundException("User not found with the id: " + id);
 
-        userRepo.deleteById(userRes.get().getId());
+        userRepo.deleteById(id);
 
         return userRes.get();
     }

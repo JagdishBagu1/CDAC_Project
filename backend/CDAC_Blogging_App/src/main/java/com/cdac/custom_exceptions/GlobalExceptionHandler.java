@@ -1,6 +1,6 @@
 package com.cdac.custom_exceptions;
 
-import com.cdac.payload.ApiResponse;
+import com.cdac.utils.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.cdac.payload;
+package com.cdac.utils;
 
 import lombok.*;
 

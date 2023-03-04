@@ -15,6 +15,7 @@ import java.util.Date;
 @Data
 public class UserDTO {
 
+    private Long id;
     @Email
     @NotEmpty(message = "Can't be null or empty")
     private String email;

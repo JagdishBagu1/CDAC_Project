@@ -13,7 +13,7 @@ public class CdacBloggingAppApplication {
     }
 
     @Bean
-    public ModelMapper modelMapper () {
+    public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 

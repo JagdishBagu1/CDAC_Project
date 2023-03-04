@@ -2,11 +2,10 @@ package com.cdac.controllers;
 
 import com.cdac.dtos.UserDTO;
 import com.cdac.entities.User;
-import com.cdac.payload.ApiResponse;
+import com.cdac.utils.ApiResponse;
 import com.cdac.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,38 +43,38 @@ public class UserController {
         );
     }
 
-    @GetMapping("/{email}")
-    ResponseEntity<ApiResponse<User>> handleSingleUser(@PathVariable String email) {
+    @GetMapping("/{id}")
+    ResponseEntity<ApiResponse<User>> handleSingleUser(@PathVariable long id) {
         return ResponseEntity.ok(
                 ApiResponse
                         .<User>builder()
                         .success(true)
-                        .body(userService.getUserByEmail(email))
-                        .message("Fetched single user: " + email)
+                        .body(userService.getUserById(id))
+                        .message("Fetched single user with id: " + id)
                         .build()
         );
     }
 
-    @PutMapping("/{email}")
-    ResponseEntity<ApiResponse> handleUpdate(@PathVariable String email, @RequestBody UserDTO updatedUserDTO) {
+    @PutMapping("/{id}")
+    ResponseEntity<ApiResponse> handleUpdate(@PathVariable long id, @RequestBody UserDTO updatedUserDTO) {
         return ResponseEntity.ok(
                 ApiResponse
                         .builder()
                         .success(true)
-                        .body(userService.updateUser(email, updatedUserDTO))
+                        .body(userService.updateUser(id, updatedUserDTO))
                         .message("User has been updated successfully!")
                         .build()
         );
     }
 
-    @DeleteMapping("/{email}")
-    ResponseEntity<ApiResponse<User>> handleDelete(@PathVariable String email) {
+    @DeleteMapping("/{id}")
+    ResponseEntity<ApiResponse<User>> handleDelete(@PathVariable long id) {
         return ResponseEntity.ok(
                 ApiResponse
                         .<User>builder()
                         .success(true)
-                        .body(userService.deleteUser(email))
-                        .message("User '" + email + "' has been deleted successfully!")
+                        .body(userService.deleteUser(id))
+                        .message("User has been deleted successfully!")
                         .build()
         );
     }

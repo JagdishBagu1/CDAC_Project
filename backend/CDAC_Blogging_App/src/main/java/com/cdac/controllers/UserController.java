@@ -24,8 +24,8 @@ public class UserController {
         return ResponseEntity.ok(
                 ApiResponse
                         .<User>builder()
-                        .success(true)
                         .body(userService.insertUser(userDTO))
+                        .success(true)
                         .message("User has been created successfully!")
                         .build()
         );
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ApiResponse> handleUpdate(@PathVariable long id, @RequestBody UserDTO updatedUserDTO) {
+    ResponseEntity<ApiResponse> handleUpdate(@PathVariable long id, @Valid @RequestBody UserDTO updatedUserDTO) {
         return ResponseEntity.ok(
                 ApiResponse
                         .builder()

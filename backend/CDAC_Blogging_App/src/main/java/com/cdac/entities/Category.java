@@ -1,6 +1,5 @@
 package com.cdac.entities;
 
-import com.cdac.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,35 +10,24 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String email;
-    private String firstName;
-    private String lastName;
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
+    @Column(nullable = false, length = 100, unique = true)
+    private String name;
+    private String description;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date createdAt;
-
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-
-    /*
-     * @OneToMany(mappedBy = "user") private List<Role> role;
-     */
 
 }

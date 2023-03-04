@@ -25,6 +25,7 @@ public class Role {
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(updatable = false)
 	private Date createdAt;
 
 	@UpdateTimestamp

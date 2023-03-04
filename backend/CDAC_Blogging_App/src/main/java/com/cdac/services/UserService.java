@@ -48,15 +48,12 @@ public class UserService {
 
     // Update the existing user in the DB -
     public User updateUser(long id, UserDTO updatedUserDTO) {
-        if(id != updatedUserDTO.getId())
-            throw new RuntimeException("Bad request!");
-
         Optional<User> userRes = userRepo.findById(id);
         if (userRes.isEmpty())
             throw new ResourceNotFoundException("User not found with the id: " + id);
 
         User user = dtoToUser(updatedUserDTO);
-        user.setId(userRes.get().getId());
+        user.setId(id);
 
         user = userRepo.save(user);
 

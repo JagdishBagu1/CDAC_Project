@@ -25,5 +25,7 @@ public class UserDTO {
     private String lastName;
     private Date dateOfBirth;
     private Gender gender;
+    private Date createdAt;
+    private Date updatedAt;
 
 }

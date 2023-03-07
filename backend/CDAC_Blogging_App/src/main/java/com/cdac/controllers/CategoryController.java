@@ -49,7 +49,7 @@ public class CategoryController {
         return ResponseEntity.ok(
                 ApiResponse
                         .<Category>builder()
-                        .body(categoryService.getSingleCategory(id))
+                        .body(categoryService.getCategoryById(id))
                         .success(true)
                         .message("Fetched category with id: " + id)
                         .build()

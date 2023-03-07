@@ -1,8 +1,8 @@
 package com.cdac.entities;
 
-import com.cdac.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,34 +12,34 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "posts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+@Builder
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false, unique = true)
-    private String email;
-    private String firstName;
-    private String lastName;
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
+    private long id;
+    @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
+    private String imageUrl;
+    @Column(nullable = false, length = 65530)
+    private String content;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     private Date createdAt;
-
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Post> posts;
+
+    @ManyToOne
+    private Category category;
+    @ManyToOne
+    private User user;
 
 }

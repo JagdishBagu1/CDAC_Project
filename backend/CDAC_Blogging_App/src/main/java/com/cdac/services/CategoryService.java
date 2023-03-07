@@ -31,7 +31,7 @@ public class CategoryService {
         return categoryRepo.findAll();
     }
 
-    public Category getSingleCategory(long id) {
+    public Category getCategoryById(long id) {
         Optional<Category> optionalCategory = categoryRepo.findById(id);
         if (optionalCategory.isEmpty()) throw new ResourceNotFoundException("Category not found with id: " + id);
 
@@ -39,7 +39,7 @@ public class CategoryService {
     }
 
     public Category updateCategory(long id, CategoryDTO updatedCategoryDTO) {
-        Category category = getSingleCategory(id);
+        Category category = getCategoryById(id);
         category = dtoToCategory(updatedCategoryDTO);
         category.setId(id);
 
@@ -47,7 +47,7 @@ public class CategoryService {
     }
 
     public Category deleteCategory(long id) {
-        Category category = getSingleCategory(id);
+        Category category = getCategoryById(id);
         categoryRepo.deleteById(id);
 
         return category;

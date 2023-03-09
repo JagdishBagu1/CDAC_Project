@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -21,54 +22,44 @@ public class UserService {
     private ModelMapper modelMapper;
 
     // Create user in the DB -
-    public User insertUser(UserDTO userDTO) {
+    public UserDTO insertUser(UserDTO userDTO) {
         User user = dtoToUser(userDTO);
         user = userRepo.save(user);
+        userDTO = userToDTO(user);
 
-        return user;
+        return userDTO;
     }
 
     // Read all the users from DB -
-    public List<User> getAllUsers() {
-        List<User> users = null;
-
-        users = userRepo.findAll();
-
-        return users;
+    public List<UserDTO> getAllUsers() {
+        return userRepo.findAll().stream().map((user) -> userToDTO(user)).collect(Collectors.toList());
     }
 
     // Find a user by email -
-    public User getUserById(long id) {
+    public UserDTO getUserById(long id) {
         Optional<User> userRes = userRepo.findById(id);
-        if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the id: " + id);
+        if (userRes.isEmpty()) throw new ResourceNotFoundException("User not found with the id: " + id);
 
-        return userRes.get();
+        return userToDTO(userRes.get());
     }
 
     // Update the existing user in the DB -
-    public User updateUser(long id, UserDTO updatedUserDTO) {
-        Optional<User> userRes = userRepo.findById(id);
-        if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the id: " + id);
-
+    public UserDTO updateUser(long id, UserDTO updatedUserDTO) {
+        getUserById(id);
         User user = dtoToUser(updatedUserDTO);
         user.setId(id);
 
         user = userRepo.save(user);
 
-        return user;
+        return userToDTO(user);
     }
 
     // Delete the existing user from the DB -
-    public User deleteUser(long id) {
-        Optional<User> userRes = userRepo.findById(id);
-        if (userRes.isEmpty())
-            throw new ResourceNotFoundException("User not found with the id: " + id);
-
+    public UserDTO deleteUser(long id) {
+        UserDTO userDTO = getUserById(id);
         userRepo.deleteById(id);
 
-        return userRes.get();
+        return userDTO;
     }
 
     public UserDTO userToDTO(User user) {

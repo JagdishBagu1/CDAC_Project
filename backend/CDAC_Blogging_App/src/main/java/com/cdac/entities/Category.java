@@ -31,7 +31,7 @@ public class Category {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Post> posts;
 
 }

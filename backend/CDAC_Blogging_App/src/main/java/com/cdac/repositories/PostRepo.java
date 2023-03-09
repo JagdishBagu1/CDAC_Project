@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface PostRepo extends JpaRepository<Post, Long> {
 
     Optional<List<Post>> findAllByUser(long id);
+
     Optional<List<Post>> findAllByCategory(long id);
 
 }

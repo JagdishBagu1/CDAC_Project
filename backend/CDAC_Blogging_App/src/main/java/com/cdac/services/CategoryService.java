@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -20,37 +21,37 @@ public class CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Category insertCategory(CategoryDTO categoryDTO) {
+    public CategoryDTO insertCategory(CategoryDTO categoryDTO) {
         Category category = dtoToCategory(categoryDTO);
         category = categoryRepo.save(category);
 
-        return category;
+        return categoryToDTO(category);
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepo.findAll();
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepo.findAll().stream().map((category -> categoryToDTO(category))).collect(Collectors.toList());
     }
 
-    public Category getCategoryById(long id) {
+    public CategoryDTO getCategoryById(long id) {
         Optional<Category> optionalCategory = categoryRepo.findById(id);
         if (optionalCategory.isEmpty()) throw new ResourceNotFoundException("Category not found with id: " + id);
 
-        return optionalCategory.get();
+        return categoryToDTO(optionalCategory.get());
     }
 
-    public Category updateCategory(long id, CategoryDTO updatedCategoryDTO) {
-        Category category = getCategoryById(id);
-        category = dtoToCategory(updatedCategoryDTO);
+    public CategoryDTO updateCategory(long id, CategoryDTO updatedCategoryDTO) {
+        getCategoryById(id);
+        Category category = dtoToCategory(updatedCategoryDTO);
         category.setId(id);
 
-        return categoryRepo.save(category);
+        return categoryToDTO(categoryRepo.save(category));
     }
 
-    public Category deleteCategory(long id) {
-        Category category = getCategoryById(id);
+    public CategoryDTO deleteCategory(long id) {
+        CategoryDTO categoryDTO = getCategoryById(id);
         categoryRepo.deleteById(id);
 
-        return category;
+        return categoryDTO;
     }
 
     public CategoryDTO categoryToDTO(Category category) {

@@ -54,10 +54,9 @@ public class PostService {
     }
 
     public PostDTO updatePost(long id, PostDTO updatedPostDTO) {
-        getPostById(id);
-
-        Post post = dtoToPost(updatedPostDTO);
-        post.setId(id);
+        Post post = dtoToPost(getPostById(id));
+        post.setTitle(updatedPostDTO.getTitle());
+        post.setContent(updatedPostDTO.getContent());
 
         post = postRepo.save(post);
 

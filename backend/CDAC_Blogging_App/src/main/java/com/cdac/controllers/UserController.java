@@ -5,6 +5,7 @@ import com.cdac.services.UserService;
 import com.cdac.utils.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class UserController {
     @PostMapping
     ResponseEntity<ApiResponse<UserDTO>> handleInsertUser(@Valid @RequestBody UserDTO userDTO) {
 //		System.out.println(userDTO);
-        return ResponseEntity.ok(ApiResponse.<UserDTO>builder().body(userService.insertUser(userDTO)).success(true).message("User has been created successfully!").build());
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.<UserDTO>builder().body(userService.insertUser(userDTO)).success(true).message("User has been created successfully!").build());
     }
 
     @GetMapping

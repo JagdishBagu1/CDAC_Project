@@ -28,7 +28,7 @@ public class PostDTO {
     private Date createdAt;
     private Date updatedAt;
 
-    private CategoryDTO categoryDTO;
-    private UserDTO userDTO;
+    private CategoryDTO category;
+    private UserDTO user;
 
 }

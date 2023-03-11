@@ -53,6 +53,20 @@ public class PostService {
         return postToDTO(postRes.get());
     }
 
+    public List<PostDTO> getAllPostsByUser(long id) {
+        User user = userService.dtoToUser(userService.getUserById(id));
+        List<Post> posts = postRepo.findAllByUser(user);
+
+        return posts.stream().map((post -> postToDTO(post))).collect(Collectors.toList());
+    }
+
+    public List<PostDTO> getAllPostsByCategory(long id) {
+        Category category = categoryService.dtoToCategory(categoryService.getCategoryById(id));
+        List<Post> posts = postRepo.findAllByCategory(category);
+
+        return posts.stream().map((post -> postToDTO(post))).collect(Collectors.toList());
+    }
+
     public PostDTO updatePost(long id, PostDTO updatedPostDTO) {
         Post post = dtoToPost(getPostById(id));
         post.setTitle(updatedPostDTO.getTitle());
@@ -69,6 +83,10 @@ public class PostService {
         postRepo.deleteById(id);
 
         return postDTO;
+    }
+
+    public List<PostDTO> search(String keywords) {
+        return postRepo.findByTitleContaining(keywords).stream().map(post -> postToDTO(post)).collect(Collectors.toList());
     }
 
     public Post dtoToPost(PostDTO postDTO) {

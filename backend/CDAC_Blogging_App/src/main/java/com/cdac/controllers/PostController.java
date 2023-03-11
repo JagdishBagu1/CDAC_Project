@@ -33,6 +33,21 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.getPostById(postId)).success(true).message("Fetched single Post with id: " + postId).build());
     }
 
+    @GetMapping("/users/{userId}")
+    ResponseEntity<ApiResponse<List<PostDTO>>> controlPostsByUser(@PathVariable long userId) {
+        return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.getAllPostsByUser(userId)).success(true).message("Fetched all Posts with user id: " + userId).build());
+    }
+
+    @GetMapping("/categories/{categoryId}")
+    ResponseEntity<ApiResponse<List<PostDTO>>> controlPostsByCategory(@PathVariable long categoryId) {
+        return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.getAllPostsByCategory(categoryId)).success(true).message("Fetched all Posts with category id: " + categoryId).build());
+    }
+
+    @GetMapping("/search/{keywords}")
+    ResponseEntity<ApiResponse<List<PostDTO>>> controlSearchPost(@PathVariable String keywords) {
+        return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.search(keywords)).success(true).message("Fetched all searched Posts.").build());
+    }
+
     @PutMapping("/{postId}")
     ResponseEntity<ApiResponse<PostDTO>> controlUpdatePost(@PathVariable long postId, @Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.updatePost(postId, postDTO)).success(true).message("Updated Post with id: " + postId).build());

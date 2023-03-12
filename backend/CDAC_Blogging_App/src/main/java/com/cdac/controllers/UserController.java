@@ -1,5 +1,6 @@
 package com.cdac.controllers;
 
+import com.cdac.dtos.RoleDTO;
 import com.cdac.dtos.UserDTO;
 import com.cdac.services.UserService;
 import com.cdac.utils.ApiResponse;
@@ -35,8 +36,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ApiResponse<?>> handleUpdate(@PathVariable long id, @Valid @RequestBody UserDTO updatedUserDTO) {
-        return ResponseEntity.ok(ApiResponse.builder().success(true).body(userService.updateUser(id, updatedUserDTO)).message("User has been updated successfully!").build());
+    ResponseEntity<ApiResponse<UserDTO>> handleUpdate(@PathVariable long id, @Valid @RequestBody UserDTO updatedUserDTO) {
+        return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.updateUser(id, updatedUserDTO)).message("User has been updated successfully!").build());
     }
 
     @DeleteMapping("/{id}")

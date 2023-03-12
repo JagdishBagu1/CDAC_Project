@@ -7,15 +7,27 @@ import com.cdac.entities.Category;
 import com.cdac.entities.Post;
 import com.cdac.entities.User;
 import com.cdac.repositories.PostRepo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class PostService {
 
     @Autowired
@@ -28,18 +40,47 @@ public class PostService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public PostDTO insertPost(long userId, long categoryId, PostDTO postDTO) {
+    @Value("${project.images}")
+    private String path;
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    public PostDTO insertPost(long userId, long categoryId, MultipartFile image, String postData) throws IOException {
         User user = userService.dtoToUser(userService.getUserById(userId));
         Category category = categoryService.dtoToCategory(categoryService.getCategoryById(categoryId));
 
+        // code for image copy
+        String imageName = image.getOriginalFilename();
+        // for avoiding naming conflicts we will use UUID
+        String randomImageName = UUID.randomUUID().toString();
+        randomImageName = randomImageName.concat(imageName.substring(imageName.lastIndexOf(".")));
+
+        String fullPath = path + File.separator + randomImageName;
+
+        // creating folder images if not exists
+        File file = new File(path);
+        if (!file.exists()) file.mkdir();
+
+        // then copy the image comming from frontend
+        Files.copy(image.getInputStream(), Path.of(fullPath));
+
+        PostDTO postDTO = mapper.readValue(postData, PostDTO.class);
         Post post = dtoToPost(postDTO);
-        post.setImageUrl(Constants.DEFAULT_POST_IMAGE_URL);
+        post.setImageUrl(randomImageName);
         post.setUser(user);
         post.setCategory(category);
 
         post = postRepo.save(post);
 
         return postToDTO(post);
+    }
+
+    public InputStream serveImage(String imageName) throws IOException {
+        String fullPath = path + File.separator + imageName;
+        InputStream inputStream = new FileInputStream(fullPath);
+
+        return inputStream;
     }
 
     public List<PostDTO> getAllPosts() {

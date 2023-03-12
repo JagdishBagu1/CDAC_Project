@@ -19,6 +19,8 @@ public class UserDTO {
     @Email
     @NotEmpty(message = "Can't be null or empty")
     private String email;
+    @NotEmpty(message = "Can't be null or empty")
+    private String password;
     @Size(min = 2, max = 255, message = "Size must be between 2 and 255")
     private String firstName;
     @Size(min = 2, max = 255, message = "Size must be between 2 and 255")

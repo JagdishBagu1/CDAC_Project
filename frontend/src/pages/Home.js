@@ -1,5 +1,5 @@
 import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import Blog from '../components/Blog'
 import Grid from "@mui/material/Grid";
@@ -8,12 +8,82 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 
 export default function Home() {
+  const [blogs, setBlogs] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [categories, setCategories] = useState([])
+  const [selectedCategoryId, setSelectedCategoryId] = useState('')
 
-  const handleCategory = () => {
-    console.log("clicked category")
+  useEffect(() => {
+    getAllBlogs();
+    getAllCategories()
+  }, [])
 
+
+  // get all categories
+  const getAllCategories = () => {
+    console.log("in get all categories")
+
+    axios.get(process.env.REACT_APP_SERVER_URL + "/api/categories").then(res => {
+      console.log("results ", res.data)
+      if (res.data.success) {
+        console.log("No error")
+        setCategories(res.data.body)
+      }
+    }).catch(err => {
+      console.log("Error ", err.message)
+    })
+  }
+
+
+  // get all blogs
+  const getAllBlogs = () => {
+    console.log("in get all blogs")
+
+    axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts").then(res => {
+      console.log("results ", res.data)
+      if (res.data.success) {
+        console.log("No error")
+        setBlogs(res.data.body)
+      }
+    }).catch(err => {
+      console.log("Error ", err.message)
+    })
+  }
+
+  // search blogs
+  const searchBlogs = () => {
+    console.log("in search blogs")
+
+    axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/search/" + searchTerm).then(res => {
+      console.log("results ", res.data)
+      if (res.data.success) {
+        console.log("No error")
+        setBlogs(res.data.body)
+
+        setSelectedCategoryId('')
+      }
+    }).catch(err => {
+      console.log("Error ", err.message)
+    })
+  }
+
+  // get by category
+  const handleCategory = (catId) => {
+    console.log(" category Id", catId)
+
+    axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/categories/" + catId).then(res => {
+      console.log("results ", res.data)
+      if (res.data.success) {
+        console.log("No error")
+        setBlogs(res.data.body)
+        setSelectedCategoryId(catId)
+      }
+    }).catch(err => {
+      console.log("Error ", err.message)
+    })
   }
 
   return (
@@ -48,73 +118,52 @@ export default function Home() {
             borderTop: '2px solid #cccccc'
           }}>
             {/* blog section */}
-            <Container sx={{mt:4}}>
+            <Container sx={{ mt: 4 }}>
 
               {/* search box */}
               <Paper
                 component="form"
-                sx={{ p: '2px 4px', mt:2, display: 'flex', alignItems: 'center', width: 400 }}
+                sx={{ p: '2px 4px', mt: 2, display: 'flex', alignItems: 'center', width: 400 }}
               >
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Search for blogs"
                   inputProps={{ 'aria-label': 'search google maps' }}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  value={searchTerm}
                 />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={searchBlogs}>
                   <SearchIcon />
                 </IconButton>
 
               </Paper>
 
               {/* categories list */}
-              <Grid container spacing={3} sx={{my:1}}>
-                <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
-                  <Chip
-                    size="sm"
-                    variant="soft"
-                    color='info'
-                    sx={{ fontWeight: 700 }}
-                    onClick={handleCategory}
-                  >
-                    Technology
-                  </Chip>
-                </Grid>
-                <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
-                  <Chip
-                    size="sm"
-                    variant="soft"
-                    color='info'
-                    sx={{ fontWeight: 700}}
-                  >
-                    Development
-                  </Chip>
-                </Grid>
-                <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
-                  <Chip
-                    size="sm"
-                    color='info'
-                    variant="soft"
-                    sx={{ fontWeight: 700 }}
-                  >
-                    Government
-                  </Chip>
-                </Grid>
-                <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
-                  <Chip
-                    size="sm"
-                    color='info'
-                    variant="soft"
-                    sx={{ fontWeight: 700}}
-                  >
-                    Community
-                  </Chip>
-                </Grid>
-              </Grid>
-              {/* list of blogs  */}
+              <Grid container spacing={3} sx={{ my: 1 }}>
+                {categories.map(cat => (
+                  <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
+                    <Chip
+                      size="sm"
+                      variant={selectedCategoryId === cat.id ? 'solid' : 'soft'}
+                      color='info'
+                      sx={{
+                        fontWeight: 700,
+                        px: 2,
+                      }}
+                      onClick={() => handleCategory(cat.id)}
+                    >
 
-              {[1,2,3].map(element => (
-              <Blog />
+                      {cat.name}
+                    </Chip>
+                  </Grid>
+                ))}
+              </Grid>
+
+              {/* list of blogs  */}
+              {blogs.map(element => (
+                <Blog data={element} />
               ))}
+
             </Container>
           </Box>
         </Container>

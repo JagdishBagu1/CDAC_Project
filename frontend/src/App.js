@@ -9,8 +9,8 @@ import Updateprofile from './pages/UpdateProfile';
 function App() {
   return (
     <>
-      {/* <Home /> */}
-      <SignIn />
+      <Home />
+      {/* <SignIn /> */}
       {/* <Updateprofile /> */}
     </>
   );

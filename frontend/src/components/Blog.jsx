@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Typography } from "@mui/material";
+import { capitalize, Container, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,8 +8,9 @@ import Grid from "@mui/material/Grid";
 import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import Chip from "@mui/joy/Chip";
+import dateFormat from 'dateformat';
 
-function Blog() {
+function Blog({data}) {
   return (
       <Card sx={{my:2}}>
         <Grid container>
@@ -24,25 +25,26 @@ function Blog() {
                     fontSize: 12,
                     display: "inline-grid",
                     mr: 1,
+                    textTransform: 'uppercase'
                   }}
                 >
-                  SS
+                  {data.user.firstName[0]}{data.user.lastName[0]}
                 </Avatar>
-                Shivam Sharma
+                {data.user.firstName} {data.user.lastName}
               </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                Blog Title 1
+              <Typography gutterBottom variant="h6" component="div" sx={{textTransform: 'capitalize'}}>
+                {data.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
+                {data.content.substring(0,200)+"..."}
               </Typography>
               <Typography
                 variant="body2"
                 display="inline"
                 sx={{ fontWeight: 600, color: "#818181" }}
               >
-                Mar 22 2023
+                {/* {data.updatedAt} */}
+                {dateFormat(data.updatedAt, "mmm d, yyyy")}
               </Typography>
               <Typography display="inline">
                 <Chip
@@ -50,7 +52,7 @@ function Blog() {
                   variant="soft"
                   sx={{ px: 1.5, fontWeight: 700, ml: 5 }}
                 >
-                  Categories
+                  {data.category.name}
                 </Chip>
               </Typography>
             </CardContent>
@@ -58,7 +60,7 @@ function Blog() {
           <Grid item xs={12} sm={4} lg={3} md={3}>
             <CardMedia
               component="img"
-              height="160"
+              height="170"
               image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
               alt="green iguana"
             />

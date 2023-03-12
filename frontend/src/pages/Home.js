@@ -89,7 +89,6 @@ export default function Home() {
   return (
     <>
       <CssBaseline />
-      <NavBar />
       <Box component="main" sx={{
         minHeight: '100vh'
       }}>

@@ -12,9 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Dashboard', 'BLOG APPut'];
+import { Link } from 'react-router-dom';
 
 export default function NavBar() {
 
@@ -86,11 +84,12 @@ export default function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Home</Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">SignIn</Typography>
+                </MenuItem>
             </Menu>
           </Box>
 
@@ -114,15 +113,22 @@ export default function NavBar() {
             BLOG APP
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'right', mr: 2 }}>
-            {pages.map((page) => (
               <Button
-                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/"
               >
-                {page}
+                Home
               </Button>
-            ))}
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/signIn"
+              >
+                SignIn
+              </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -132,7 +138,7 @@ export default function NavBar() {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '45px',}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -147,11 +153,18 @@ export default function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem onClick={handleCloseUserMenu} sx={{width:160}} component={Link} to="/addBlog" >
+                  <Typography textAlign="center">Add Blog</Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/myBlogs" >
+                  <Typography textAlign="center">My Blogs</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/updateProfile" >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/logout" >
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

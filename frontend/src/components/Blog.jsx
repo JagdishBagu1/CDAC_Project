@@ -9,6 +9,7 @@ import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import Chip from "@mui/joy/Chip";
 import dateFormat from 'dateformat';
+import { Link } from "react-router-dom";
 
 function Blog({ data }) {
   return (
@@ -16,7 +17,7 @@ function Blog({ data }) {
       <Grid container>
         <Grid item xs={12} sm={8} lg={9} md={9}>
           <CardContent>
-            <Typography variant="caption" component={"span"} sx={{ my: 2 }}>
+            <Typography variant="caption" component={"span"} sx={{ my: 2}}>
               <Avatar
                 sx={{
                   bgcolor: deepOrange[500],
@@ -30,9 +31,10 @@ function Blog({ data }) {
               >
                 {data.user.firstName[0]}{data.user.lastName[0]}
               </Avatar>
-              {data.user.firstName} {data.user.lastName}
+              {data.user.firstName.toUpperCase()} {data.user.lastName.toUpperCase()}
             </Typography>
-            <Typography gutterBottom variant="h6" component="div" sx={{ textTransform: 'capitalize' }}>
+            <br />
+            <Typography gutterBottom variant="h6" sx={{ textTransform: 'capitalize', textDecoration: 'none' }} component={Link} to={`/blogDetails/${data.id}`} >
               {data.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">

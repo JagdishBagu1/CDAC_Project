@@ -21,11 +21,6 @@ spring:
     generate-ddl: true
     show-sql: true
 
-
-  security:
-    user:
-      name: admin
-      password: admin
   servlet:
     multipart:
       enabled: true

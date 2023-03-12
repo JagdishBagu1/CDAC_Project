@@ -1,0 +1,73 @@
+import React from "react";
+
+import { capitalize, Container, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
+import { Avatar } from "@mui/material";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+import Chip from "@mui/joy/Chip";
+import dateFormat from 'dateformat';
+
+function Blog({data}) {
+  return (
+      <Card sx={{my:2}}>
+        <Grid container>
+          <Grid item xs={12} sm={8} lg={9} md={9}>
+            <CardContent>
+              <Typography variant="caption" component={"span"} sx={{ my: 2 }}>
+                <Avatar
+                  sx={{
+                    bgcolor: deepOrange[500],
+                    width: 25,
+                    height: 25,
+                    fontSize: 12,
+                    display: "inline-grid",
+                    mr: 1,
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  {data.user.firstName[0]}{data.user.lastName[0]}
+                </Avatar>
+                {data.user.firstName} {data.user.lastName}
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div" sx={{textTransform: 'capitalize'}}>
+                {data.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {data.content.substring(0,200)+"..."}
+              </Typography>
+              <Typography
+                variant="body2"
+                display="inline"
+                sx={{ fontWeight: 600, color: "#818181" }}
+              >
+                {/* {data.updatedAt} */}
+                {dateFormat(data.updatedAt, "mmm d, yyyy")}
+              </Typography>
+              <Typography display="inline">
+                <Chip
+                  size="sm"
+                  variant="soft"
+                  sx={{ px: 1.5, fontWeight: 700, ml: 5 }}
+                >
+                  {data.category.name}
+                </Chip>
+              </Typography>
+            </CardContent>
+          </Grid>
+          <Grid item xs={12} sm={4} lg={3} md={3}>
+            <CardMedia
+              component="img"
+              height="170"
+              image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+              alt="green iguana"
+            />
+          </Grid>
+        </Grid>
+      </Card>
+  );
+}
+
+export default Blog;

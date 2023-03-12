@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET).permitAll()
+                .requestMatchers("**/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

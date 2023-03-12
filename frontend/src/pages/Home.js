@@ -1,7 +1,7 @@
 import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
-import Blog from '../components/Blog'
+import Blog from '../components/Blog';
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/joy/Chip";
 import Paper from '@mui/material/Paper';
@@ -11,80 +11,80 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
 export default function Home() {
-  const [blogs, setBlogs] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [categories, setCategories] = useState([])
-  const [selectedCategoryId, setSelectedCategoryId] = useState('')
+  const [blogs, setBlogs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
   useEffect(() => {
     getAllBlogs();
-    getAllCategories()
-  }, [])
+    getAllCategories();
+  }, []);
 
 
   // get all categories
   const getAllCategories = () => {
-    console.log("in get all categories")
+    console.log("in get all categories");
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/categories").then(res => {
-      console.log("results ", res.data)
+      console.log("results ", res.data);
       if (res.data.success) {
-        console.log("No error")
-        setCategories(res.data.body)
+        console.log("No error");
+        setCategories(res.data.body);
       }
     }).catch(err => {
-      console.log("Error ", err.message)
-    })
-  }
+      console.log("Error ", err.message);
+    });
+  };
 
 
   // get all blogs
   const getAllBlogs = () => {
-    console.log("in get all blogs")
+    console.log("in get all blogs");
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts").then(res => {
-      console.log("results ", res.data)
+      console.log("results ", res.data);
       if (res.data.success) {
-        console.log("No error")
-        setBlogs(res.data.body)
+        console.log("No error");
+        setBlogs(res.data.body);
       }
     }).catch(err => {
-      console.log("Error ", err.message)
-    })
-  }
+      console.log("Error ", err.message);
+    });
+  };
 
   // search blogs
   const searchBlogs = () => {
-    console.log("in search blogs")
+    console.log("in search blogs");
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/search/" + searchTerm).then(res => {
-      console.log("results ", res.data)
+      console.log("results ", res.data);
       if (res.data.success) {
-        console.log("No error")
-        setBlogs(res.data.body)
+        console.log("No error");
+        setBlogs(res.data.body);
 
-        setSelectedCategoryId('')
+        setSelectedCategoryId('');
       }
     }).catch(err => {
-      console.log("Error ", err.message)
-    })
-  }
+      console.log("Error ", err.message);
+    });
+  };
 
   // get by category
   const handleCategory = (catId) => {
-    console.log(" category Id", catId)
+    console.log(" category Id", catId);
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/categories/" + catId).then(res => {
-      console.log("results ", res.data)
+      console.log("results ", res.data);
       if (res.data.success) {
-        console.log("No error")
-        setBlogs(res.data.body)
-        setSelectedCategoryId(catId)
+        console.log("No error");
+        setBlogs(res.data.body);
+        setSelectedCategoryId(catId);
       }
     }).catch(err => {
-      console.log("Error ", err.message)
-    })
-  }
+      console.log("Error ", err.message);
+    });
+  };
 
   return (
     <>
@@ -141,7 +141,7 @@ export default function Home() {
               {/* categories list */}
               <Grid container spacing={3} sx={{ my: 1 }}>
                 {categories.map(cat => (
-                  <Grid item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
+                  <Grid key={cat.id} item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
                     <Chip
                       size="sm"
                       variant={selectedCategoryId === cat.id ? 'solid' : 'soft'}
@@ -160,8 +160,8 @@ export default function Home() {
               </Grid>
 
               {/* list of blogs  */}
-              {blogs.map(element => (
-                <Blog data={element} />
+              {blogs.map(blog => (
+                <Blog key={blog.id} data={blog} />
               ))}
 
             </Container>

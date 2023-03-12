@@ -1,9 +1,11 @@
 package com.cdac.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,7 +16,8 @@ import java.util.List;
 @Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Role {
 
     @Id
@@ -30,6 +33,7 @@ public class Role {
     private Date updatedAt;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<User> users;
 
 }

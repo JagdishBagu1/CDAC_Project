@@ -1,10 +1,8 @@
 package com.cdac.security;
 
 import com.cdac.custom_exceptions.ResourceNotFoundException;
-import com.cdac.dtos.UserDTO;
 import com.cdac.entities.User;
 import com.cdac.repositories.UserRepo;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

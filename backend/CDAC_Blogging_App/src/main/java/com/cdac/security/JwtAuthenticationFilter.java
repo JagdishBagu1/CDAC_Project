@@ -24,7 +24,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JWTUtils jwtUtils;
 
     @Override
-
     protected void doFilterInternal(HttpServletRequest request,
 
                                     HttpServletResponse response, FilterChain chain)

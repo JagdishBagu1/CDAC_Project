@@ -73,6 +73,7 @@ export default function Home() {
   // get by category
   const handleCategory = (catId) => {
     console.log(" category Id", catId);
+    setSearchTerm('')
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/categories/" + catId).then(res => {
       console.log("results ", res.data);

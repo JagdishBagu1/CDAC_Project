@@ -32,6 +32,8 @@ export default function SignIn() {
     axios.post(process.env.REACT_APP_SERVER_URL+ '/api/auth/login', {username, password}).then(res => {
       console.log(res.data)
       // Write your logic here after successful response
+      setOpen(true)
+
     }).catch(err => {
       console.log("Error ", err)
     })
@@ -47,7 +49,7 @@ export default function SignIn() {
         autoHideDuration={2000}
       >
       <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          This is a success message!
+          You are successfully logged In.
         </Alert>
         </ Snackbar>
       <CssBaseline />

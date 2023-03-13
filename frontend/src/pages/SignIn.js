@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
+import axios from 'axios'
 
 export default function SignIn() {
   const [ open, setOpen ] = useState(false)
@@ -25,7 +26,13 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    setOpen(true)
+    let username = data.get('email')
+    let password = data.get('password')
+
+    axios.post(process.env.REACT_APP_SERVER_URL+'/api/auth/login', {username, password}).then(res => {
+      console.log(res.data)
+    })
+
   };
 
   return (

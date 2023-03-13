@@ -25,6 +25,6 @@ public class CdacBloggingAppApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(passwordEncoder.encode("ashwani"));
+//        System.out.println(passwordEncoder.encode("ashwani"));
     }
 }

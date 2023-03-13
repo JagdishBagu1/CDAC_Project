@@ -29,8 +29,11 @@ export default function SignIn() {
     let username = data.get('email')
     let password = data.get('password')
 
-    axios.post(process.env.REACT_APP_SERVER_URL+'/api/auth/login', {username, password}).then(res => {
+    axios.post(process.env.REACT_APP_SERVER_URL+ '/api/auth/login', {username, password}).then(res => {
       console.log(res.data)
+      // Write your logic here after successful response
+    }).catch(err => {
+      console.log("Error ", err)
     })
 
   };

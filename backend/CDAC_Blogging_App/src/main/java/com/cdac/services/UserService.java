@@ -6,6 +6,7 @@ import com.cdac.entities.User;
 import com.cdac.repositories.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +22,13 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Create user in the DB -
     public UserDTO insertUser(UserDTO userDTO) {
         User user = dtoToUser(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepo.save(user);
         userDTO = userToDTO(user);
 

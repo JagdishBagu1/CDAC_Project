@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,21 +26,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.<UserDTO>builder().body(userService.insertUser(userDTO)).success(true).message("User has been created successfully!").build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     ResponseEntity<ApiResponse<List<UserDTO>>> handleAllUsers() {
         return ResponseEntity.ok(ApiResponse.<List<UserDTO>>builder().success(true).body(userService.getAllUsers()).message("Fetched all users!").build());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
     ResponseEntity<ApiResponse<UserDTO>> handleSingleUser(@PathVariable long id) {
         return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.getUserById(id)).message("Fetched single user with id: " + id).build());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     ResponseEntity<ApiResponse<UserDTO>> handleUpdate(@PathVariable long id, @Valid @RequestBody UserDTO updatedUserDTO) {
         return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.updateUser(id, updatedUserDTO)).message("User has been updated successfully!").build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     ResponseEntity<ApiResponse<UserDTO>> handleDelete(@PathVariable long id) {
         return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.deleteUser(id)).message("User has been deleted successfully!").build());

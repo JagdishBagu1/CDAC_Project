@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,11 +64,13 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.search(keywords)).success(true).message("Fetched all searched Posts.").build());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{postId}")
     ResponseEntity<ApiResponse<PostDTO>> controlUpdatePost(@PathVariable long postId, @Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.updatePost(postId, postDTO)).success(true).message("Updated Post with id: " + postId).build());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{postId}")
     ResponseEntity<ApiResponse<PostDTO>> controlDeletePost(@PathVariable long postId) {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.deletePost(postId)).success(true).message("Deleted Post with id: " + postId).build());

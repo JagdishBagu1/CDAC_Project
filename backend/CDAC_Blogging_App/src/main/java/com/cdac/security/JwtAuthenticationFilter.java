@@ -1,7 +1,6 @@
 package com.cdac.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailService userDetailsService;
     @Autowired
     private JWTUtils jwtUtils;
+
     @Override
 
     protected void doFilterInternal(HttpServletRequest request,
@@ -74,7 +74,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     this.userDetailsService.loadUserByUsername(username);
 
 
-            if (!request.getRequestURL().toString().contains("auth") ||jwtUtils.validateToken(jwtToken, userDetails)) {
+            if (!request.getRequestURL().toString().contains("auth") || jwtUtils.validateToken(jwtToken, userDetails)) {
 
                 UsernamePasswordAuthenticationToken
 

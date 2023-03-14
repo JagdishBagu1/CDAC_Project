@@ -1,14 +1,19 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 function Footer() {
+
   return (
-    <div>
-      <Typography variant='h1' sx={{minHeight:200, textAlign: 'center', bgcolor:'chocolate'}}>
-        Footer
-      </Typography> 
-    </div>
-  )
+    <Box component="footer" sx={ { bgcolor: '#eeeeee', py: 2 } }>
+      <Container maxWidth="lg">
+        <Typography align="center">
+          created by: <b>Ashwani</b>
+        </Typography>
+      </Container>
+    </Box>
+  );
 }
 
-export default Footer
+export default Footer;

@@ -1,6 +1,5 @@
 package com.cdac.services;
 
-import com.cdac.constants.Constants;
 import com.cdac.custom_exceptions.ResourceNotFoundException;
 import com.cdac.dtos.PostDTO;
 import com.cdac.entities.Category;

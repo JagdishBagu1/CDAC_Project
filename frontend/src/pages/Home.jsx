@@ -1,6 +1,5 @@
 import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
 import Blog from '../components/Blog';
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/joy/Chip";
@@ -89,85 +88,77 @@ export default function Home() {
 
   return (
     <>
-      <CssBaseline />
-      <Box component="main" sx={{
-        minHeight: '100vh'
-      }}>
-        <Container maxWidth="xl">
-          <Box sx={{
-            my: 2,
-            position: 'relative',
-            minWidth: '100%',
-            height: '250px',
-            backgroundImage: 'url(./images/4.jpg)',
-            color: '#ffffff',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <Typography variant='h3' sx={{
+      <Container maxWidth="xl">
+        <Box sx={ {
+          my: 2,
+          position: 'relative',
+          minWidth: '100%',
+          height: '250px',
+          backgroundImage: 'url(./images/4.jpg)',
+          color: '#ffffff',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        } }>
+          <Typography
+            variant='h4'
+            sx={ {
               width: '50%',
               textAlign: 'center',
               textShadow: '2px 2px 10px black'
-            }}>We are working to become one of the best.</Typography>
-          </Box>
-          <Box sx={{
-            borderTop: '2px solid #cccccc'
-          }}>
-            {/* blog section */}
-            <Container sx={{ mt: 4 }}>
+            } }
+          >
+            We are working to become one of the best.
+          </Typography>
+        </Box>
 
-              {/* search box */}
-              <Paper
-                component="form"
-                sx={{ p: '2px 4px', mt: 2, display: 'flex', alignItems: 'center', width: 400 }}
-              >
-                <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search for blogs"
-                  inputProps={{ 'aria-label': 'search google maps' }}
-                  onChange={e => setSearchTerm(e.target.value)}
-                  value={searchTerm}
-                />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={searchBlogs}>
-                  <SearchIcon />
-                </IconButton>
+        <Box>
+          {/* search box */ }
+          <Paper
+            variant='outlined'
+            component="form"
+            sx={ { p: '2px 4px', display: 'flex', alignItems: 'center', width: 300 } }
+          >
+            <InputBase
+              sx={ { ml: 1, flex: 1 } }
+              placeholder="Search"
+              inputProps={ { 'aria-label': 'search' } }
+              onChange={ e => setSearchTerm(e.target.value) }
+              value={ searchTerm }
+            />
+            <IconButton type="button" sx={ { p: '10px' } } aria-label="search" onClick={ searchBlogs }>
+              <SearchIcon />
+            </IconButton>
+          </Paper>
 
-              </Paper>
-
-              {/* categories list */}
-              <Grid container spacing={3} sx={{ my: 1 }}>
-                {categories.map(cat => (
-                  <Grid key={cat.id} item xs={6} sm={3} md={2} lg={1} sx={{ mx: 1 }}>
-                    <Chip
-                      size="sm"
-                      variant={selectedCategoryId === cat.id ? 'solid' : 'soft'}
-                      color='info'
-                      sx={{
-                        fontWeight: 700,
-                        px: 2,
-                      }}
-                      onClick={() => handleCategory(cat.id)}
-                    >
-
-                      {cat.name}
-                    </Chip>
-                  </Grid>
-                ))}
+          {/* categories list */ }
+          <Grid container spacing={ 2 } >
+            { categories.map(cat => (
+              <Grid item key={ cat.id }>
+                <Chip
+                  variant={ selectedCategoryId === cat.id ? 'solid' : 'soft' }
+                  color='info'
+                  sx={ {
+                    fontWeight: 700,
+                  } }
+                  onClick={ () => handleCategory(cat.id) }
+                >
+                  { cat.name }
+                </Chip>
               </Grid>
+            )) }
+          </Grid>
 
-              {/* list of blogs  */}
-              {blogs.map(blog => (
-                <Blog key={blog.id} data={blog} />
-              ))}
+          {/* list of blogs  */ }
+          { blogs.map(blog => (
+            <Blog key={ blog.id } data={ blog } />
+          )) }
 
-            </Container>
-          </Box>
-        </Container>
-      </Box>
+        </Box>
+      </Container>
     </>
   );
 }

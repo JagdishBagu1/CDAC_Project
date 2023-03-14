@@ -135,9 +135,9 @@ export default function Home() {
           </Paper>
 
           {/* categories list */ }
-          <Grid container spacing={ 2 } >
+          <Grid container sx={ { my: 2 } } >
             { categories.map(cat => (
-              <Grid item key={ cat.id }>
+              <Grid item sx={ { mr: '10px' } } key={ cat.id }>
                 <Chip
                   variant={ selectedCategoryId === cat.id ? 'solid' : 'soft' }
                   color='info'

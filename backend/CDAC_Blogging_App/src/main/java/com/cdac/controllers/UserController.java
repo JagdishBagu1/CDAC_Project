@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.getUserById(id)).message("Fetched single user with id: " + id).build());
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     ResponseEntity<ApiResponse<UserDTO>> handleUpdate(@PathVariable long id, @Valid @RequestBody UserDTO updatedUserDTO) {
         return ResponseEntity.ok(ApiResponse.<UserDTO>builder().success(true).body(userService.updateUser(id, updatedUserDTO)).message("User has been updated successfully!").build());

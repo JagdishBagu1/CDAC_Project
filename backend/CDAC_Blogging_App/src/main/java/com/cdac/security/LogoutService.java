@@ -31,6 +31,9 @@ public class LogoutService implements LogoutHandler {
             throw new RuntimeException("Token is not found either in Authorization header or in db.");
         }
 
+        if (storedToken.isExpired() || storedToken.isRevoked())
+            throw new RuntimeException("Authentication failed.");
+
         storedToken.setExpired(true);
         storedToken.setRevoked(true);
         tokenRepository.save(storedToken);

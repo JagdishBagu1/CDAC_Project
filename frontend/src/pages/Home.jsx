@@ -73,7 +73,7 @@ export default function Home() {
   // get by category
   const handleCategory = (catId) => {
     console.log(" category Id", catId);
-    setSearchTerm('')
+    setSearchTerm('');
 
     axios.get(process.env.REACT_APP_SERVER_URL + "/api/posts/categories/" + catId).then(res => {
       console.log("results ", res.data);
@@ -160,8 +160,12 @@ export default function Home() {
               </Grid>
 
               {/* list of blogs  */}
-              {blogs.map(blog => (
+              {/* {blogs.map(blog => (
                 <Blog key={blog.id} data={blog} />
+              ))} */}
+
+              {blogs.map(blog => (
+                blog.user.firstName
               ))}
 
             </Container>

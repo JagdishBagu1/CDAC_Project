@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     ResponseEntity<ApiResponse<RoleDTO>> handleInsertUser(@Valid @RequestBody RoleDTO roleDTO) {
 //		System.out.println(userDTO);
@@ -34,11 +36,13 @@ public class RoleController {
         return ResponseEntity.ok(ApiResponse.<RoleDTO>builder().success(true).body(roleService.getRoleById(id)).message("Fetched single role with id: " + id).build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     ResponseEntity<ApiResponse<RoleDTO>> handleUpdate(@PathVariable long id, @Valid @RequestBody RoleDTO updatedRoleDTO) {
         return ResponseEntity.ok(ApiResponse.<RoleDTO>builder().success(true).body(roleService.updateRole(id, updatedRoleDTO)).message("Role has been updated successfully!").build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     ResponseEntity<ApiResponse<RoleDTO>> handleDelete(@PathVariable long id) {
         return ResponseEntity.ok(ApiResponse.<RoleDTO>builder().success(true).body(roleService.deleteROle(id)).message("Role has been deleted successfully!").build());

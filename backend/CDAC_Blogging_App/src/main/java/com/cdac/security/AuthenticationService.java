@@ -36,8 +36,7 @@ public class AuthenticationService {
     private UserRepo userRepo;
 
 
-    public JwtAuthResponse register(JwtAuthRequest request) {
-        UserDTO userDTO = modelMapper.map(request, UserDTO.class);
+    public JwtAuthResponse register(UserDTO userDTO) {
         userDTO = userService.insertUser(userDTO);
         User savedUser = modelMapper.map(userDTO, User.class);
 

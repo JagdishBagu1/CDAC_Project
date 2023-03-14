@@ -17,7 +17,7 @@ function Blog({ data }) {
       <Grid container>
         <Grid item xs={12} sm={8} lg={9} md={9}>
           <CardContent>
-            <Typography variant="caption" component={"span"} sx={{ my: 2}}>
+            <Typography variant="caption" component={"span"} sx={{ my: 2 }}>
               <Avatar
                 sx={{
                   bgcolor: deepOrange[500],

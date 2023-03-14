@@ -1,5 +1,6 @@
 package com.cdac.controllers;
 
+import com.cdac.dtos.UserDTO;
 import com.cdac.security.*;
 import com.cdac.services.UserService;
 import jakarta.validation.Valid;
@@ -30,8 +31,8 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    ResponseEntity<JwtAuthResponse> controlRegisterUser(@Valid @RequestBody JwtAuthRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    ResponseEntity<JwtAuthResponse> controlRegisterUser(@Valid @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(authenticationService.register(userDTO));
     }
 
     @PostMapping("/login")

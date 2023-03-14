@@ -25,6 +25,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/users/{userId}/categories/{categoryId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<ApiResponse<PostDTO>> controlCreatePost(@PathVariable long userId, @PathVariable long categoryId, @RequestParam("image") MultipartFile file, @RequestParam("postData") String postData) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.<PostDTO>builder().body(postService.insertPost(userId, categoryId, file, postData)).success(true).message("Post created successfully!").build());
@@ -49,6 +50,7 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.getPostById(postId)).success(true).message("Fetched single Post with id: " + postId).build());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/users/{userId}")
     ResponseEntity<ApiResponse<List<PostDTO>>> controlPostsByUser(@PathVariable long userId) {
         return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.getAllPostsByUser(userId)).success(true).message("Fetched all Posts with user id: " + userId).build());

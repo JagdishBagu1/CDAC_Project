@@ -60,7 +60,7 @@ function Register() {
         setOpen(true);
         setMessageStatus(true)
         localStorage.setItem('token',res.data.token)
-        navigate('/login')
+        navigate('/updateProfile')
 
       })
       .catch((err) => {

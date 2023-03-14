@@ -15,6 +15,7 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import MyBlogs from './pages/MyBlogs';
 import { Box, CssBaseline } from '@mui/material';
+import Logout from './pages/Logout';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path='/register' element={ <Register /> } />
             <Route path='/updateProfile' element={ <Updateprofile /> } />
             <Route path='/myBlogs' element={ <MyBlogs /> } />
+            <Route path='/logout' element={ <Logout /> } />
 
             <Route path='/*' element={ <Error /> } />
           </Routes>

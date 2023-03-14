@@ -11,11 +11,14 @@ import Container from '@mui/material/Container';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [open, setOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const navigate = useNavigate()
 
   const handleClose = () => {
     setOpen(false);
@@ -37,10 +40,13 @@ export default function SignIn() {
       setMsg('Logged in successfully!');
       setIsSuccess(true);
       setOpen(true);
+      localStorage.setItem('token',res.data.token)
+      navigate('/updateProfile')
 
     }).catch(err => {
       console.log("Error ", err.response.data);
       setMsg(err.response.data.error);
+      setIsSuccess(false)
       setOpen(true);
     });
 

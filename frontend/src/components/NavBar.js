@@ -121,14 +121,15 @@ export default function NavBar() {
               >
                 Home
               </Button>
-              <Button
+              {!localStorage.getItem('token') && (
+                <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={Link}
                 to="/register"
               >
                 Register
-              </Button>
+              </Button>)}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

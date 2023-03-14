@@ -11,14 +11,17 @@ import Container from '@mui/material/Container';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [open, setOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [msg, setMsg] = useState('');
 
+
   const navigate = useNavigate()
+  // const {state} = useLocation()
+
 
   const handleClose = () => {
     setOpen(false);

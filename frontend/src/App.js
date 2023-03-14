@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
+import Register from './pages/Register';
 import Updateprofile from './pages/UpdateProfile';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -36,6 +37,7 @@ function App() {
             <Route path='/blogs' element={ <Home /> } />
             <Route path='/blogDetails/:id' element={ <BlogDetail /> } />
             <Route path='/signIn' element={ <SignIn /> } />
+            <Route path='/register' element={ <Register /> } />
             <Route path='/updateProfile' element={ <Updateprofile /> } />
             <Route path='/myBlogs' element={ <MyBlogs /> } />
 

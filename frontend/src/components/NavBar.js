@@ -125,9 +125,9 @@ export default function NavBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={Link}
-                to="/signIn"
+                to="/register"
               >
-                SignIn
+                Register
               </Button>
           </Box>
 

@@ -64,6 +64,7 @@ public class UserService {
         getUserById(id);
         User user = dtoToUser(updatedUserDTO);
         user.setId(id);
+        user.setPassword(passwordEncoder.encode(updatedUserDTO.getPassword()));
 
         user = userRepo.save(user);
 

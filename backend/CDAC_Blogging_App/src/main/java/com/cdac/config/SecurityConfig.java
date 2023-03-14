@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .requestMatchers(PUBLIC_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -69,11 +70,6 @@ public class SecurityConfig {
 
         return httpSecurity.build();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().requestMatchers("/api/auth/login");
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

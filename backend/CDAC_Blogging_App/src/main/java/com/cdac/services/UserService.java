@@ -2,7 +2,9 @@ package com.cdac.services;
 
 import com.cdac.custom_exceptions.ResourceNotFoundException;
 import com.cdac.dtos.UserDTO;
+import com.cdac.entities.Role;
 import com.cdac.entities.User;
+import com.cdac.repositories.RoleRepo;
 import com.cdac.repositories.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -25,10 +29,17 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final long DEFAULT_ROLE_ID = 2;
+
     // Create user in the DB -
     public UserDTO insertUser(UserDTO userDTO) {
         User user = dtoToUser(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role role = roleRepo.findById(DEFAULT_ROLE_ID).orElseThrow(() -> new ResourceNotFoundException("Role not found with id: " + DEFAULT_ROLE_ID));
+        List<Role> roles = List.of(role);
+        user.setRoles(roles);
+
         user = userRepo.save(user);
         userDTO = userToDTO(user);
 

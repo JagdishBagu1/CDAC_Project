@@ -62,7 +62,7 @@ public class PostService {
         File file = new File(path);
         if (!file.exists()) file.mkdir();
 
-        // then copy the image comming from frontend
+        // then copy the image coming from frontend
         Files.copy(image.getInputStream(), Path.of(fullPath));
 
         PostDTO postDTO = mapper.readValue(postData, PostDTO.class);

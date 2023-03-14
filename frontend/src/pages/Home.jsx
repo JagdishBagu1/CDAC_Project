@@ -160,12 +160,8 @@ export default function Home() {
               </Grid>
 
               {/* list of blogs  */}
-              {/* {blogs.map(blog => (
-                <Blog key={blog.id} data={blog} />
-              ))} */}
-
               {blogs.map(blog => (
-                blog.user.firstName
+                <Blog key={blog.id} data={blog} />
               ))}
 
             </Container>

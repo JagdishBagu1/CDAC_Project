@@ -25,7 +25,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping(value = "/users/{userId}/categories/{categoryId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<ApiResponse<PostDTO>> controlCreatePost(@PathVariable long userId, @PathVariable long categoryId, @RequestParam("image") MultipartFile file, @RequestParam("postData") String postData) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.<PostDTO>builder().body(postService.insertPost(userId, categoryId, file, postData)).success(true).message("Post created successfully!").build());
@@ -50,7 +50,7 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.getPostById(postId)).success(true).message("Fetched single Post with id: " + postId).build());
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/users/{userId}")
     ResponseEntity<ApiResponse<List<PostDTO>>> controlPostsByUser(@PathVariable long userId) {
         return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.getAllPostsByUser(userId)).success(true).message("Fetched all Posts with user id: " + userId).build());
@@ -66,13 +66,13 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.<List<PostDTO>>builder().body(postService.search(keywords)).success(true).message("Fetched all searched Posts.").build());
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("/{postId}")
     ResponseEntity<ApiResponse<PostDTO>> controlUpdatePost(@PathVariable long postId, @Valid @RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.updatePost(postId, postDTO)).success(true).message("Updated Post with id: " + postId).build());
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("/{postId}")
     ResponseEntity<ApiResponse<PostDTO>> controlDeletePost(@PathVariable long postId) {
         return ResponseEntity.ok(ApiResponse.<PostDTO>builder().body(postService.deletePost(postId)).success(true).message("Deleted Post with id: " + postId).build());

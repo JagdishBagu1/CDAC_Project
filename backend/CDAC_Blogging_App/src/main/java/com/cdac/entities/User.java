@@ -1,6 +1,7 @@
 package com.cdac.entities;
 
 import com.cdac.enums.Gender;
+import com.cdac.security.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,9 @@ public class User implements UserDetails {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

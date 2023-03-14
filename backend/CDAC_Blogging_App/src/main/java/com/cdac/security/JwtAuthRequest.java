@@ -1,5 +1,6 @@
 package com.cdac.security;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,10 @@ import lombok.Setter;
 @Setter
 public class JwtAuthRequest {
 
-    private String username;
+    @NotEmpty(message = "Email required.")
+    private String email;
+
+    @NotEmpty(message = "Password required.")
     private String password;
 
 }

@@ -1,14 +1,12 @@
 package com.cdac.controllers;
 
-import com.cdac.security.CustomUserDetailService;
-import com.cdac.security.JWTUtils;
-import com.cdac.security.JwtAuthRequest;
-import com.cdac.security.JwtAuthResponse;
+import com.cdac.security.*;
+import com.cdac.services.UserService;
+import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,25 +19,24 @@ public class AuthController {
     @Autowired
     private JWTUtils jwtUtils;
     @Autowired
+    private UserService userService;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
     private CustomUserDetailService userDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationService authenticationService;
 
-    @PostMapping("/login")
-    ResponseEntity<JwtAuthResponse> controlCreateToken(@RequestBody JwtAuthRequest request) {
-        this.authenticate(request.getUsername(), request.getPassword());
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
-        String token = this.jwtUtils.generateToken(userDetails);
-
-        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
-        jwtAuthResponse.setToken(token);
-
-        return ResponseEntity.ok(jwtAuthResponse);
+    @PostMapping("/register")
+    ResponseEntity<JwtAuthResponse> controlRegisterUser(@Valid @RequestBody JwtAuthRequest request) {
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    private void authenticate(String username, String password) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+    @PostMapping("/login")
+    ResponseEntity<JwtAuthResponse> controlCreateToken(@Valid @RequestBody JwtAuthRequest request) {
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
 }

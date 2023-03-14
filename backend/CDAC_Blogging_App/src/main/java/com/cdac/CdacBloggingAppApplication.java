@@ -1,5 +1,6 @@
 package com.cdac;
 
+import com.cdac.enums.Gender;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,5 +27,6 @@ public class CdacBloggingAppApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        System.out.println(passwordEncoder.encode("ashwani"));
+//        System.out.println(Gender.Male.ordinal());
     }
 }

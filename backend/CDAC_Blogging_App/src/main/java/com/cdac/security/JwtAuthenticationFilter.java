@@ -1,5 +1,6 @@
 package com.cdac.security;
 
+import com.cdac.security.token.TokenRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,6 +21,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private CustomUserDetailService userDetailsService;
+    @Autowired
+    private TokenRepository tokenRepository;
     @Autowired
     private JWTUtils jwtUtils;
 
@@ -62,8 +65,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     this.userDetailsService.loadUserByUsername(username);
 
+            var isTokenValid = tokenRepository.findByToken(jwtToken)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
 
-            if (!request.getRequestURL().toString().contains("auth") || jwtUtils.validateToken(jwtToken, userDetails)) {
+
+            if (jwtUtils.validateToken(jwtToken, userDetails) && isTokenValid) {
 
                 UsernamePasswordAuthenticationToken
 

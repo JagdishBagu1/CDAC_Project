@@ -20,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     ResponseEntity<ApiResponse<UserDTO>> handleInsertUser(@Valid @RequestBody UserDTO userDTO) {
 //		System.out.println(userDTO);

@@ -14,6 +14,8 @@ import axios from 'axios';
 
 export default function SignIn() {
   const [open, setOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const handleClose = () => {
     setOpen(false);
@@ -26,16 +28,20 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    let username = data.get('email');
+    let email = data.get('email');
     let password = data.get('password');
 
-    axios.post(process.env.REACT_APP_SERVER_URL + '/api/auth/login', { username, password }).then(res => {
+    axios.post(process.env.REACT_APP_SERVER_URL + '/api/auth/login', { email, password }).then(res => {
       console.log(res.data);
       // Write your logic here after successful response
+      setMsg('Logged in successfully!');
+      setIsSuccess(true);
       setOpen(true);
 
     }).catch(err => {
-      console.log("Error ", err);
+      console.log("Error ", err.response.data);
+      setMsg(err.response.data.error);
+      setOpen(true);
     });
 
   };
@@ -48,8 +54,8 @@ export default function SignIn() {
         onClose={ handleClose }
         autoHideDuration={ 2000 }
       >
-        <Alert onClose={ handleClose } severity="success" sx={ { width: '100%' } }>
-          You are successfully logged In.
+        <Alert onClose={ handleClose } severity={ isSuccess ? "success" : "error" } sx={ { width: '100%' } }>
+          { msg }
         </Alert>
       </ Snackbar>
       <CssBaseline />

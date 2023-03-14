@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function Blog({ data }) {
   return (
-    <Card sx={ { my: 2 } }>
+    <Card variant="outlined" sx={ { my: 2 } }>
       <Grid container>
         <Grid item xs={ 12 } sm={ 12 } md={ 4 } lg={ 3 }>
           <CardMedia

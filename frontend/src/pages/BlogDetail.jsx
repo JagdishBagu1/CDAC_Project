@@ -4,8 +4,7 @@ import axios from "axios";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { Avatar } from "@mui/material";
-import { deepOrange, deepPurple } from "@mui/material/colors";
-import Chip from "@mui/joy/Chip";
+import { deepOrange } from "@mui/material/colors";
 import dateFormat from "dateformat";
 
 function BlogDetail() {
@@ -14,7 +13,7 @@ function BlogDetail() {
 
   useEffect(() => {
     getBlogDetails();
-  }, 1);
+  }, []);
 
   // get blog detail
   const getBlogDetails = () => {
@@ -34,17 +33,17 @@ function BlogDetail() {
   };
 
   return (
-    <Container sx={{ mt: 3 }}>
+    <Container sx={ { mt: 3 } }>
       <Typography
         variant="h4"
-        color={"secondary"}
-        sx={{ textAlign: "center", mb: 3, fontWeight: 600 }}
+        color={ "secondary" }
+        sx={ { textAlign: "center", mb: 3, fontWeight: 600 } }
       >
         Blog Details
       </Typography>
-      <Typography variant="caption" component={"span"} sx={{ my: 2, fontSize: 16}}>
+      <Typography variant="caption" component={ "span" } sx={ { my: 2, fontSize: 16 } }>
         <Avatar
-          sx={{
+          sx={ {
             bgcolor: deepOrange[500],
             width: 40,
             height: 40,
@@ -52,31 +51,31 @@ function BlogDetail() {
             display: "inline-grid",
             mr: 1,
             textTransform: "uppercase",
-          }}
+          } }
         >
-          {data.user && data.user.firstName[0] + data.user.lastName[0]}
+          { data.user && data.user.firstName[0] + data.user.lastName[0] }
         </Avatar>
-        {data.user && data.user.firstName.toUpperCase()}{" "}
-        {data.user && data.user.lastName.toUpperCase()}
+        { data.user && data.user.firstName.toUpperCase() }{ " " }
+        { data.user && data.user.lastName.toUpperCase() }
       </Typography>
-      <Typography variant="h5" sx={{mt:2}}>{data.title}</Typography>
+      <Typography variant="h5" sx={ { mt: 2 } }>{ data.title }</Typography>
 
       <Typography
         variant="body2"
-        component={"div"}
-        sx={{ fontWeight: 600, color: "#818181" }}
+        component={ "div" }
+        sx={ { fontWeight: 600, color: "#818181" } }
       >
-        {/* {data.updatedAt} */}
-        {data && dateFormat(data.updatedAt, "mmm d, yyyy")}
+        {/* {data.updatedAt} */ }
+        { data && dateFormat(data.updatedAt, "mmm d, yyyy") }
       </Typography>
 
       <img
-        src={`https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg`}
-        alt={data.title}
+        src={ `${process.env.REACT_APP_IMAGE_SERVER_URL}/${data.imageUrl}` }
+        alt={ data.title }
         width="100%"
         loading="lazy"
       />
-      <Typography variant="subtitle1" sx={{my:3}}>{data.content}</Typography>
+      <Typography variant="subtitle1" sx={ { my: 3 } }>{ data.content }</Typography>
     </Container>
   );
 }

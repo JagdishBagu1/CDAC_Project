@@ -9,9 +9,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Snackbar from '@mui/material/Snackbar';
-import { Alert } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function SignIn() {
   const [msg, setMsg] = useState('');
 
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const {state} = useLocation()
 
 
@@ -43,45 +43,53 @@ export default function SignIn() {
       setMsg('Logged in successfully!');
       setIsSuccess(true);
       setOpen(true);
-      localStorage.setItem('token',res.data.token)
-      navigate('/updateProfile')
+      localStorage.setItem('token', res.data.token);
+      navigate('/profile');
 
     }).catch(err => {
       console.log("Error ", err.response.data);
       setMsg(err.response.data.error);
-      setIsSuccess(false)
+      setIsSuccess(false);
       setOpen(true);
     });
 
   };
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container
+      maxWidth="sm"
+      sx={{
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
       <Snackbar
-        anchorOrigin={ { vertical: 'top', horizontal: 'center' } }
-        open={ open }
-        onClose={ handleClose }
-        autoHideDuration={ 2000 }
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={2000}
       >
-        <Alert onClose={ handleClose } severity={ isSuccess ? "success" : "error" } sx={ { width: '100%' } }>
-          { msg }
+        <Alert onClose={handleClose} severity={isSuccess ? "success" : "error"} sx={{ width: '100%' }}>
+          {msg}
         </Alert>
       </ Snackbar>
       <CssBaseline />
       <Box
-        sx={ {
+        sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        } }
+        }}
       >
-        <Avatar sx={ { m: 1, bgcolor: 'secondary.main' } }>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={ handleSubmit } noValidate sx={ { mt: 1 } }>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -106,10 +114,17 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={ { mt: 3, mb: 2, py: 1.3 } }
+            sx={{ mt: 3, mb: 2, py: 1.3 }}
           >
             Sign In
           </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link to="/register" variant="body2">
+                New user? Register
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

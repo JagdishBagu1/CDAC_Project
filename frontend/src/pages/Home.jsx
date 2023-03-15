@@ -1,4 +1,4 @@
-import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import Blog from '../components/Blog';
 import Grid from "@mui/material/Grid";
@@ -88,8 +88,8 @@ export default function Home() {
 
   return (
     <>
-      <Container maxWidth="xl">
-        <Box sx={ {
+      <Container maxWidth="xl" sx={{ flexGrow: 1 }}>
+        <Box sx={{
           my: 2,
           position: 'relative',
           minWidth: '100%',
@@ -102,60 +102,60 @@ export default function Home() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
-        } }>
+        }}>
           <Typography
             variant='h4'
-            sx={ {
+            sx={{
               width: '50%',
               textAlign: 'center',
               textShadow: '2px 2px 10px black'
-            } }
+            }}
           >
             We are working to become one of the best.
           </Typography>
         </Box>
 
         <Box>
-          {/* search box */ }
+          {/* search box */}
           <Paper
             variant='outlined'
             component="form"
-            sx={ { p: '2px 4px', display: 'flex', alignItems: 'center', width: 300 } }
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 300 }}
           >
             <InputBase
-              sx={ { ml: 1, flex: 1 } }
+              sx={{ ml: 1, flex: 1 }}
               placeholder="Search"
-              inputProps={ { 'aria-label': 'search' } }
-              onChange={ e => setSearchTerm(e.target.value) }
-              value={ searchTerm }
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={e => setSearchTerm(e.target.value)}
+              value={searchTerm}
             />
-            <IconButton type="button" sx={ { p: '10px' } } aria-label="search" onClick={ searchBlogs }>
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={searchBlogs}>
               <SearchIcon />
             </IconButton>
           </Paper>
 
-          {/* categories list */ }
-          <Grid container sx={ { my: 2 } } >
-            { categories.map(cat => (
-              <Grid item sx={ { mr: '10px' } } key={ cat.id }>
+          {/* categories list */}
+          <Grid container sx={{ my: 2 }} >
+            {categories.map(cat => (
+              <Grid item sx={{ mr: '10px' }} key={cat.id}>
                 <Chip
-                  variant={ selectedCategoryId === cat.id ? 'solid' : 'soft' }
+                  variant={selectedCategoryId === cat.id ? 'solid' : 'soft'}
                   color='info'
-                  sx={ {
+                  sx={{
                     fontWeight: 700,
-                  } }
-                  onClick={ () => handleCategory(cat.id) }
+                  }}
+                  onClick={() => handleCategory(cat.id)}
                 >
-                  { cat.name }
+                  {cat.name}
                 </Chip>
               </Grid>
-            )) }
+            ))}
           </Grid>
 
-          {/* list of blogs  */ }
-          { blogs.map(blog => (
-            <Blog key={ blog.id } data={ blog } />
-          )) }
+          {/* list of blogs  */}
+          {blogs.map(blog => (
+            <Blog key={blog.id} data={blog} />
+          ))}
 
         </Box>
       </Container>

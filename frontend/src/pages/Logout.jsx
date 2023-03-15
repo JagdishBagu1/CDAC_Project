@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,7 +7,7 @@ function Logout() {
 
   useEffect(() => {
     logout();
-  }, []);
+  });
 
   const logout = () => {
     console.log("in logout");
@@ -16,15 +16,15 @@ function Logout() {
 
     axios
       .get("http://localhost:9095/api/auth/logout", {
-        headers: { Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         console.log(res.data);
         localStorage.removeItem("token");
-        navigate("/signIn");
+        navigate("/");
       })
       .catch((err) => {
-        console.log("Error ", err.response);
+        console.log("Error ", err.response.data);
       });
   };
 }

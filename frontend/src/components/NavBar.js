@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
-export default function NavBar() {
+export default function NavBar({ title }) {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -53,7 +53,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            BLOG APP
+            {title}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -84,12 +84,12 @@ export default function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Home</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">SignIn</Typography>
-                </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">SignIn</Typography>
+              </MenuItem>
             </Menu>
           </Box>
 
@@ -110,64 +110,77 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            BLOG APP
+            {title}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'right', mr: 2 }}>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block' }}
+              component={Link}
+              to="/"
+            >
+              Home
+            </Button>
+            {!localStorage.getItem('token') && (
               <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                component={Link}
-                to="/"
-              >
-                Home
-              </Button>
-              {!localStorage.getItem('token') && (
-                <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
                 component={Link}
                 to="/register"
               >
                 Register
-              </Button>)}
+              </Button>
+            )}
+            {!localStorage.getItem('token') && (
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={Link}
+                to="/signIn"
+              >
+                Login
+              </Button>
+            )}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px',}}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                <MenuItem onClick={handleCloseUserMenu} sx={{width:160}} component={Link} to="/addBlog" >
+          {localStorage.getItem('token') && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px', }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu} sx={{ width: 160 }} component={Link} to="/addBlog" >
                   <Typography textAlign="center">Add Blog</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu} component={Link} to="/myBlogs" >
                   <Typography textAlign="center">My Blogs</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/updateProfile" >
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/profile" >
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu} component={Link} to="/logout" >
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
-            </Menu>
-          </Box>
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

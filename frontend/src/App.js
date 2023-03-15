@@ -5,7 +5,7 @@ import '@fontsource/roboto/700.css';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
-import Updateprofile from './pages/UpdateProfile';
+import Profile from './pages/Profile';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BlogDetail from './pages/BlogDetail';
@@ -24,26 +24,24 @@ function App() {
       <BrowserRouter>
         <Box
           component="main"
-          sx={ {
+          sx={{
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
-          } }
+          }}
         >
-          <NavBar />
+          <NavBar title={"BLOGGING APPLICATION"} />
           <Routes>
-            <Route path='/' element={ <Home /> } />
-            <Route path='/addBlog' element={ <AddBlog /> } />
-            <Route path='/blogs' element={ <Home /> } />
-            <Route path='/blogDetails/:id' element={ <BlogDetail /> } />
-            <Route path='/signIn' element={ <SignIn /> } />
-            <Route path='/register' element={ <Register /> } />
-            <Route path='/updateProfile' element={ <Updateprofile /> } />
-            <Route path='/myBlogs' element={ <MyBlogs /> } />
-            <Route path='/logout' element={ <Logout /> } />
+            <Route path='/' element={<Home />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/signIn' element={<SignIn />} />
+            <Route path='/logout' element={<Logout />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/addBlog' element={<AddBlog />} />
+            <Route path='/myBlogs' element={<MyBlogs />} />
+            <Route path='/blogDetails/:id' element={<BlogDetail />} />
 
-            <Route path='/*' element={ <Error /> } />
+            <Route path='/*' element={<Error />} />
           </Routes>
           <Footer />
         </Box>

@@ -1,9 +1,17 @@
-import React from 'react'
+import { Container } from '@mui/material';
+import React from 'react';
 
 function MyBlogs() {
   return (
-    <div>MyBlogs</div>
-  )
+    <Container
+      maxWidth="xl"
+      sx={{
+        flexGrow: 1,
+      }}
+    >
+      <h1>My blogs page:</h1>
+    </Container>
+  );
 }
 
-export default MyBlogs
+export default MyBlogs;

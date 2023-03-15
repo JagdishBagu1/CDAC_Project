@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,11 +19,11 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [open, setOpen] = useState(false);
-  const [gender, setGender] = useState();
-  const [errorMessage, setErrorMessage] = useState('')
-  const [messageStatus, setMessageStatus] = useState(true)
+  const [gender, setGender] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [messageStatus, setMessageStatus] = useState(true);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
@@ -50,7 +50,7 @@ function Register() {
       gender: gender
     };
 
-    console.log(jsonData)
+    console.log(jsonData);
 
     axios
       .post(process.env.REACT_APP_SERVER_URL + "/api/auth/register", jsonData)
@@ -58,24 +58,32 @@ function Register() {
         console.log(res.data);
         // Write your logic here after successful response
         setOpen(true);
-        setMessageStatus(true)
-        localStorage.setItem('token',res.data.token)
-        navigate('/updateProfile')
+        setMessageStatus(true);
+        localStorage.setItem('token', res.data.token);
+        navigate('/profile');
 
       })
       .catch((err) => {
         console.log("Error ", err.response.data.message);
-        if(!err.response.data.success){
-            console.log("unsuccessful registration")
-            setErrorMessage("Unsuccessful Registration")
-            setOpen(true);
-            setMessageStatus(false)
+        if (!err.response.data.success) {
+          console.log("unsuccessful registration");
+          setErrorMessage("Unsuccessful Registration");
+          setOpen(true);
+          setMessageStatus(false);
         }
       });
   };
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container
+      maxWidth="sm"
+      sx={{
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
@@ -89,7 +97,6 @@ function Register() {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -154,7 +161,7 @@ function Register() {
                 label="Gender"
                 name="gender"
                 value={gender}
-                onChange={(e)=> {setGender(e.target.value)}}
+                onChange={(e) => { setGender(e.target.value); }}
               >
                 <MenuItem value={"Male"}>MALE</MenuItem>
                 <MenuItem value={"Female"}>FEMALE</MenuItem>

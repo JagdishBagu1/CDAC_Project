@@ -11,7 +11,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BlogDetail from './pages/BlogDetail';
 import AddBlog from './pages/AddBlog';
 import Error from './pages/Error';
-import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import { Box, CssBaseline } from '@mui/material';
 import Logout from './pages/Logout';
@@ -29,7 +28,6 @@ function App() {
             flexDirection: 'column',
           }}
         >
-          <NavBar title={"BLOGGING APPLICATION"} />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<Register />} />

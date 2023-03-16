@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 function Register() {
   const [open, setOpen] = useState(false);
@@ -76,129 +77,132 @@ function Register() {
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        flexGrow: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      }}
-    >
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={2000}
-      >
-        <Alert onClose={handleClose} severity={messageStatus ? "success" : "error"} sx={{ width: "100%" }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
-      <CssBaseline />
-      <Box
+    <>
+      <NavBar title={"BLOGGING APPLICATION"} />
+      <Container
+        maxWidth="sm"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-              <Select
-                fullWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Gender"
-                name="gender"
-                value={gender}
-                onChange={(e) => { setGender(e.target.value); }}
-              >
-                <MenuItem value={"Male"}>MALE</MenuItem>
-                <MenuItem value={"Female"}>FEMALE</MenuItem>
-                <MenuItem value={"Others"}>Others</MenuItem>
-              </Select>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputLabel id="demo-simple-select-label">Date Of Birth</InputLabel>
-              <TextField
-                required
-                fullWidth
-                name="dateOfBirth"
-                type="date"
-                id="dob"
-                autoComplete="off"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, py: 1.3 }}
-          >
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={open}
+          onClose={handleClose}
+          autoHideDuration={2000}
+        >
+          <Alert onClose={handleClose} severity={messageStatus ? "success" : "error"} sx={{ width: "100%" }}>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Register
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to="/signin" variant="body2">
-                Already have an account? Sign in
-              </Link>
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Gender"
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => { setGender(e.target.value); }}
+                >
+                  <MenuItem value={"Male"}>MALE</MenuItem>
+                  <MenuItem value={"Female"}>FEMALE</MenuItem>
+                  <MenuItem value={"Others"}>Others</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputLabel id="demo-simple-select-label">Date Of Birth</InputLabel>
+                <TextField
+                  required
+                  fullWidth
+                  name="dateOfBirth"
+                  type="date"
+                  id="dob"
+                  autoComplete="off"
+                />
+              </Grid>
             </Grid>
-          </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, py: 1.3 }}
+            >
+              Register
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link to="/signin" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 }
 

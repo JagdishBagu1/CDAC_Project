@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import Blog from '../components/Blog';
 import Grid from "@mui/material/Grid";
@@ -8,6 +8,8 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
@@ -88,6 +90,7 @@ export default function Home() {
 
   return (
     <>
+      <NavBar title={"BLOGGING APPLICATION"} />
       <Container maxWidth="xl" sx={{ flexGrow: 1 }}>
         <Box sx={{
           my: 2,
@@ -133,6 +136,10 @@ export default function Home() {
               <SearchIcon />
             </IconButton>
           </Paper>
+
+          {localStorage.getItem('token') &&
+            <Button variant='contained' sx={{ my: 2, color: 'white' }} component={Link} to='/addBlog'>New blog</Button>
+          }
 
           {/* categories list */}
           <Grid container sx={{ my: 2 }} >

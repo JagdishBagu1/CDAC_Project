@@ -60,6 +60,7 @@ function Register() {
         setOpen(true);
         setMessageStatus(true);
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         navigate('/profile');
 
       })

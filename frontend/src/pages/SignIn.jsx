@@ -44,6 +44,7 @@ export default function SignIn() {
       setIsSuccess(true);
       setOpen(true);
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/profile');
 
     }).catch(err => {

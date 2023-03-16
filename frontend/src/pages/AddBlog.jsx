@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Container, CssBaseline, Grid, InputLabel, MenuItem, Select, Snackbar, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AddBlog() {
   const [open, setOpen] = useState(false);
@@ -15,50 +15,51 @@ export default function AddBlog() {
     setOpen(false);
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setOpen(false);
-  //   const data = new FormData(event.currentTarget);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setOpen(false);
+    const data = new FormData(event.currentTarget);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem("token");
 
-  //   let firstname = data.get("firstName");
-  //   let lastname = data.get("lastName");
-  //   let email = data.get("email");
-  //   let password = data.get("password");
-  //   let dateOfBirth = data.get("dateOfBirth");
-  //   let gender = data.get("gender");
+    let title = data.get("title");
+    let category = data.get("category");
+    let image = data.get("image");
+    let content = data.get("content");
 
-  //   const jsonData = {
-  //     email: email,
-  //     firstName: firstname,
-  //     lastName: lastname,
-  //     password: password,
-  //     dateOfBirth: dateOfBirth,
-  //     gender: gender
-  //   };
+    const jsonData = {
+      image,
+      postData: JSON.stringify({
+        title,
+        content
+      })
+    };
 
-  //   console.log(jsonData);
+    console.log(`${process.env.REACT_APP_SERVER_URL}/api/posts/users/${user.id}/categories/${category}`);
+    console.log(jsonData);
 
-  //   axios
-  //     .post(process.env.REACT_APP_SERVER_URL + "/api/auth/register", jsonData)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       // Write your logic here after successful response
-  //       setOpen(true);
-  //       setMessageStatus(true);
-  //       localStorage.setItem('token', res.data.token);
-  //       navigate('/profile');
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/posts/users/${user.id}/categories/${category}`, jsonData, {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        console.log(res.data);
+        // Write your logic here after successful response
+        setOpen(true);
+        setMessageStatus(true);
+        navigate('/profile');
 
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error ", err.response.data.message);
-  //       if (!err.response.data.success) {
-  //         console.log("unsuccessful registration");
-  //         setErrorMessage("Unsuccessful Registration");
-  //         setOpen(true);
-  //         setMessageStatus(false);
-  //       }
-  //     });
-  // };
+      })
+      .catch((err) => {
+        console.log("Error ", err.response.data.message);
+        if (!err.response.data.success) {
+          console.log("unsuccessful blog creation");
+          setErrorMessage("unsuccessful blog creation");
+          setOpen(true);
+          setMessageStatus(false);
+        }
+      });
+  };
 
   if (!localStorage.getItem('token')) {
     return (
@@ -122,7 +123,7 @@ export default function AddBlog() {
         <Typography component="h1" variant="h5">
           Create new blog
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -148,6 +149,9 @@ export default function AddBlog() {
               >
                 <MenuItem value={1}>Technology</MenuItem>
                 <MenuItem value={2}>Science</MenuItem>
+                <MenuItem value={3}>Gaming</MenuItem>
+                <MenuItem value={4}>Sports</MenuItem>
+                <MenuItem value={5}>Finance</MenuItem>
               </Select>
             </Grid>
             <Grid item xs={12}>

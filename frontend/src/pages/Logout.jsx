@@ -21,6 +21,7 @@ function Logout() {
       .then((res) => {
         console.log(res.data);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         navigate("/");
       })
       .catch((err) => {

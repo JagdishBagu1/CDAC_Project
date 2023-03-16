@@ -46,6 +46,7 @@ public class AuthenticationService {
 
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(jwtToken);
+        jwtAuthResponse.setUser(userDTO);
 
         return jwtAuthResponse;
     }
@@ -65,6 +66,7 @@ public class AuthenticationService {
 
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(jwtToken);
+        jwtAuthResponse.setUser(modelMapper.map(user, UserDTO.class));
 
         return jwtAuthResponse;
     }

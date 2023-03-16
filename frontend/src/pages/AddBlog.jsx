@@ -135,7 +135,7 @@ export default function AddBlog() {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={4} display='block'>
+            <Grid item xs={12} display='block'>
               <InputLabel id="demo-simple-select-label">Category</InputLabel>
               <Select
                 fullWidth
@@ -150,13 +150,25 @@ export default function AddBlog() {
                 <MenuItem value={2}>Science</MenuItem>
               </Select>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="given-image"
                 name="image"
                 required
-                fullWidth
+                width={50}
                 type={"file"}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="given-text"
+                name="content"
+                required
+                fullWidth
+                label="Content"
+                multiline
+                rows={10}
                 autoFocus
               />
             </Grid>

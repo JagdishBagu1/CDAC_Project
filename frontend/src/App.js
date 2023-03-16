@@ -13,7 +13,6 @@ import AddBlog from './pages/AddBlog';
 import Error from './pages/Error';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import MyBlogs from './pages/MyBlogs';
 import { Box, CssBaseline } from '@mui/material';
 import Logout from './pages/Logout';
 
@@ -38,7 +37,6 @@ function App() {
             <Route path='/logout' element={<Logout />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/addBlog' element={<AddBlog />} />
-            <Route path='/myBlogs' element={<MyBlogs />} />
             <Route path='/blogDetails/:id' element={<BlogDetail />} />
 
             <Route path='/*' element={<Error />} />

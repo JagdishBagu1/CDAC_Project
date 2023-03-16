@@ -4,6 +4,20 @@ import * as React from 'react';
 
 export default function Profile() {
 
+  if (!localStorage.getItem('token')) {
+    return (
+      <Container
+        maxWidth="xl"
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <h1>Profile:</h1>
+        <Typography mt={2}>You are not logged in!</Typography>
+      </Container>
+    );
+  }
+
   return (
     <Container
       maxWidth="xl"

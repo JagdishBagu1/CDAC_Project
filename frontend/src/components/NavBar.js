@@ -147,7 +147,7 @@ export default function NavBar({ title }) {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -168,9 +168,6 @@ export default function NavBar({ title }) {
               >
                 <MenuItem onClick={handleCloseUserMenu} sx={{ width: 160 }} component={Link} to="/addBlog" >
                   <Typography textAlign="center">Add Blog</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/myBlogs" >
-                  <Typography textAlign="center">My Blogs</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu} component={Link} to="/profile" >
                   <Typography textAlign="center">Profile</Typography>
